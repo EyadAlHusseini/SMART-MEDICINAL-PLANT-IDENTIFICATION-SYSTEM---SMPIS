@@ -18,6 +18,9 @@ export default function Result() {
             className={styles.backBtn}
             onClick={() => navigate("/dashboard")}
           >
+            <svg viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
             Back to Dashboard
           </button>
 
@@ -28,9 +31,27 @@ export default function Result() {
         </div>
 
         <div className={styles.headerActions}>
-          <button className={styles.actionBtn}>Export</button>
-          <button className={styles.actionBtn}>Mark Incorrect</button>
-          <button className={styles.saveBtn}>Save (Ctrl + S)</button>
+          <button className={styles.actionBtn}>
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v12m0 0l4-4m-4 4l-4-4M4 21h16" />
+            </svg>
+            Export
+          </button>
+
+          <button className={styles.actionBtn}>
+            <svg viewBox="0 0 24 24">
+              <path d="M12 9v4m0 4h.01M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+            </svg>
+            Mark Incorrect
+          </button>
+
+          <button className={styles.saveBtn}>
+            <svg viewBox="0 0 24 24">
+              <path d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2z" />
+              <path d="M7 21v-8h10v8" />
+            </svg>
+            Save (Ctrl + S)
+          </button>
         </div>
       </div>
 
@@ -81,6 +102,8 @@ export default function Result() {
               </div>
             </div>
 
+            {/* Common Names */}
+            <p className={styles.commonLabel}>Common Names</p>
             <div className={styles.tags}>
               <span>Swiss Cheese Plant</span>
               <span>Split-leaf Philodendron</span>
@@ -94,7 +117,15 @@ export default function Result() {
               onClick={() => setShowScientific(!showScientific)}
             >
               <span>Scientific Details</span>
-              <span>{showScientific ? "Hide" : "Show"}</span>
+              <span className={styles.toggleGroup}>
+                {showScientific ? "Hide" : "Show"}
+                <svg
+                  className={showScientific ? styles.rotate : ""}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </span>
             </button>
 
             {showScientific && (
@@ -117,7 +148,15 @@ export default function Result() {
               onClick={() => setShowUsage(!showUsage)}
             >
               <span>Industrial Usage & Notes</span>
-              <span>{showUsage ? "Hide" : "Show"}</span>
+              <span className={styles.toggleGroup}>
+                {showUsage ? "Hide" : "Show"}
+                <svg
+                  className={showUsage ? styles.rotate : ""}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </span>
             </button>
 
             {showUsage && (
@@ -137,7 +176,15 @@ export default function Result() {
               onClick={() => setShowGrowth(!showGrowth)}
             >
               <span>Growth Conditions</span>
-              <span>{showGrowth ? "Hide" : "Show"}</span>
+              <span className={styles.toggleGroup}>
+                {showGrowth ? "Hide" : "Show"}
+                <svg
+                  className={showGrowth ? styles.rotate : ""}
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </span>
             </button>
 
             {showGrowth && (
@@ -151,7 +198,6 @@ export default function Result() {
         </div>
       </div>
 
-      {/* Footer Banner */}
       <div className={styles.footerBanner}>
         Review the result carefully. Save if correct, mark incorrect if further
         review is required, or export a report for documentation.

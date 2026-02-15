@@ -7,6 +7,7 @@ function DashboardLayout() {
   return (
     <div className={styles.layout}>
       <Sidebar />
+
       <div className={styles.main}>
         <Topbar />
         <div className={styles.content}>

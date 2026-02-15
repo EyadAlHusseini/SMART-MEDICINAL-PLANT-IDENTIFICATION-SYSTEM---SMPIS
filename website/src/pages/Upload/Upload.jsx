@@ -1,91 +1,69 @@
 import { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Upload.module.css";
 
 export default function Upload() {
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
 
-  const [files, setFiles] = useState([]);
+  const [file, setFile] = useState(null);
   const [showToast, setShowToast] = useState(false);
 
-  /* ---------- Helpers ---------- */
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => setShowToast(false), 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
-  const handleFiles = (selectedFiles) => {
-    if (!selectedFiles || selectedFiles.length === 0) return;
-
-    // Replace previous files completely
-    setFiles(selectedFiles);
+  const handleFile = (selectedFile) => {
+    if (!selectedFile) return;
+    setFile(selectedFile);
     setShowToast(true);
   };
 
   const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    handleFiles(selectedFiles);
-    e.target.value = ""; // reset input
+    if (e.target.files && e.target.files[0]) {
+      handleFile(e.target.files[0]);
+    }
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files).filter((file) =>
-      file.type.startsWith("image/"),
-    );
-    handleFiles(droppedFiles);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
+    }
   };
 
-  const handleRemoveImage = (indexToRemove) => {
-    setFiles((prev) => prev.filter((_, index) => index !== indexToRemove));
+  const removeImage = () => {
+    setFile(null);
   };
-
-  /* ---------- Toast Auto Hide ---------- */
-
-  useEffect(() => {
-    if (!showToast) return;
-
-    const timer = setTimeout(() => {
-      setShowToast(false);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [showToast]);
-
-  /* ---------- UI ---------- */
 
   return (
     <div className={styles.page}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Upload Images</h1>
-        <p className={styles.subtitle}>Select or drag images to classify</p>
-      </div>
+      <h1 className={styles.title}>Upload Image</h1>
+      <p className={styles.subtitle}>
+        Upload a clear image of the plant leaf you want to classify
+      </p>
 
+      {/* Upload Card */}
       <div className={styles.uploadCard}>
-        {/* Drop Zone (ALWAYS VISIBLE) */}
         <div
           className={styles.dropZone}
           onClick={() => fileInputRef.current.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
         >
-          {/* Upload Icon */}
-          <svg
-            width="64"
-            height="64"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#666666"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="17 8 12 3 7 8" />
-            <line x1="12" y1="3" x2="12" y2="15" />
+          <svg viewBox="0 0 24 24">
+            <path d="M12 16V4m0 0l4 4m-4-4L8 8M4 20h16" />
           </svg>
 
           <p className={styles.dropTitle}>Drag and drop images here</p>
           <p className={styles.dropSubtitle}>or click to browse</p>
 
           <button
-            type="button"
             className={styles.selectBtn}
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               fileInputRef.current.click();
@@ -97,84 +75,52 @@ export default function Upload() {
           <input
             ref={fileInputRef}
             type="file"
-            multiple
             accept="image/*"
             hidden
             onChange={handleFileChange}
           />
         </div>
 
-        {/* Selected Images */}
-        {files.length > 0 && (
-          <div className={styles.selectedSection}>
-            <p className={styles.selectedTitle}>
-              Selected Images ({files.length})
-            </p>
-
-            <div className={styles.imageGrid}>
-              {files.map((file, index) => (
-                <div key={index} className={styles.imageItem}>
-                  <img src={URL.createObjectURL(file)} alt={file.name} />
-
-                  <button
-                    className={styles.removeBtn}
-                    onClick={() => handleRemoveImage(index)}
-                  >
-                    ✕
-                  </button>
-
-                  <span className={styles.imageName}>{file.name}</span>
-                </div>
-              ))}
+        {/* Preview */}
+        {file && (
+          <div className={styles.previewWrapper}>
+            <div className={styles.previewItem}>
+              <img src={URL.createObjectURL(file)} alt="Preview" />
+              <button className={styles.removeBtn} onClick={removeImage}>
+                ✕
+              </button>
             </div>
-          </div>
-        )}
-
-        {/* Validation Bar */}
-        {files.length > 0 && (
-          <div className={styles.validationBar}>
-            <div className={styles.validationLeft}>
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#00A63E"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span>All images validated</span>
-            </div>
-
-            <button className={styles.submitBtn}>
-              Submit for Classification
-            </button>
           </div>
         )}
       </div>
 
-      {/* Files Selected Toast */}
-      {showToast && (
-        <div className={styles.toast}>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#111111"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+      {/* Requirements */}
+      <div className={styles.requirements}>
+        <p className={styles.requirementsTitle}>Requirements</p>
+        <p>
+          • Supported formats: JPG, PNG
+          <br />
+          • Maximum file size: 10MB per image
+          <br />
+          • Image should clearly show the plant leaf
+          <br />• Avoid blurry or low-light images
+        </p>
+      </div>
+
+      {/* Submit Button — ONLY when file exists */}
+      {file && (
+        <div className={styles.actions}>
+          <button
+            className={styles.continueBtn}
+            onClick={() => navigate("/result")}
           >
-            <circle cx="12" cy="12" r="10" />
-            <path d="M9 12l2 2 4-4" />
-          </svg>
-          <span>{files.length} file(s) selected</span>
+            Submit for Classification
+          </button>
         </div>
       )}
+
+      {/* Toast */}
+      {showToast && <div className={styles.toast}>1 file selected</div>}
     </div>
   );
 }

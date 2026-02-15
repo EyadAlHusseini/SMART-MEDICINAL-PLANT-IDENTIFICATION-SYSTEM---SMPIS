@@ -1,44 +1,83 @@
+import { NavLink } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 
 function Sidebar() {
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.brandHeader}>
-        <div className={styles.brandContent}>
-          <div className={styles.brandIcon}>
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 2L7 7a5 5 0 0 0 5 5 5 5 0 0 0 5-5z" />
-              <path d="M12 12v10" />
-            </svg>
-          </div>
-          <span className={styles.brandText}>PlantClassify</span>
+      <div className={styles.logo}>
+        <div className={styles.logoIcon}>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 2C7 2 4 6 4 10c0 5 8 12 8 12s8-7 8-12c0-4-3-8-8-8z" />
+            <path d="M12 8c2 0 3 1.5 3 3s-1 3-3 3-3-1.5-3-3 1-3 3-3z" />
+          </svg>
         </div>
+        <span>PlantClassify</span>
       </div>
 
       <nav className={styles.nav}>
-        <button className={styles.item}>Dashboard</button>
-        <button className={`${styles.item} ${styles.active}`}>
-          Scan / Upload
-        </button>
-        <button className={styles.item}>Records</button>
-        <button className={styles.item}>Reports</button>
-        <button className={styles.item}>Data Management</button>
-        <button className={styles.item}>Settings</button>
-      </nav>
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          Dashboard
+        </NavLink>
 
-      <div className={styles.footer}>
-        <p>Version 2.4.1</p>
-        <p>© 2025 PlantClassify Enterprise</p>
-      </div>
+        <NavLink
+          to="/scan-upload"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          Scan / Upload
+        </NavLink>
+
+        <NavLink
+          to="/records"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          Records
+        </NavLink>
+
+        <NavLink
+          to="/reports"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          Reports
+        </NavLink>
+
+        <NavLink
+          to="/data-management"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          Data Management
+        </NavLink>
+
+        <NavLink
+          to="/settings"
+          className={({ isActive }) =>
+            isActive ? `${styles.link} ${styles.active}` : styles.link
+          }
+        >
+          Settings
+        </NavLink>
+      </nav>
     </aside>
   );
 }

@@ -3,36 +3,51 @@
   background: var(--white);
   border-bottom: 1px solid var(--border-light);
   padding: 0 32px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  /* CRITICAL: prevent layout collapse */
+  flex-shrink: 0;
 }
 
 .title {
   font-size: 16px;
   font-weight: 500;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 
 .actions {
   display: flex;
   align-items: center;
   gap: 8px;
+
+  /* CRITICAL FIXES */
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 /* Sync, Export */
 .actionButton {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+
   padding: 6px 10px;
   border-radius: 8px;
+
   font-size: 14px;
   color: var(--text-secondary);
+
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .actionButton:hover {
@@ -43,13 +58,22 @@
 /* Notification */
 .iconButton {
   position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 6px;
   border-radius: 8px;
+
   background: transparent;
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: background-color 0.15s ease;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .iconButton:hover {
@@ -61,8 +85,10 @@
   position: absolute;
   top: -4px;
   right: -4px;
+
   background: #dc2626;
   color: white;
+
   font-size: 10px;
   padding: 2px 6px;
   border-radius: 999px;
