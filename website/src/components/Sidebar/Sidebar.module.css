@@ -1,57 +1,53 @@
 .sidebar {
-  width: 256px;
+  width: 240px;
+  height: 100vh;
   background: #ffffff;
   border-right: 1px solid #0000001a;
   display: flex;
   flex-direction: column;
 }
 
+/* Top Logo Section */
 .logo {
   height: 64px;
-  padding: 0 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: linear-gradient(135deg, #0a3f31, #2e7d63);
-  color: white;
+  padding: 0 24px;
+  font-size: 16px;
   font-weight: 500;
+  background: #0f3d2e; /* identity solid */
+  color: #ffffff;
 }
 
-.logoIcon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Nav container */
 .nav {
-  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  padding: 16px;
+  gap: 6px;
 }
 
+/* Default link */
 .link {
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: 8px;
+  font-size: 14px;
   text-decoration: none;
-  color: #111111;
-  font-size: 16px;
-  transition: background-color 0.15s ease;
+  color: #1f2937;
+  transition: background 0.15s ease;
 }
 
+/* Hover */
 .link:hover {
-  background-color: #cfe4d9;
+  background: #f3f4f6;
 }
 
+/* Active link */
 .active {
-  background-color: #0a3f31;
-  color: white;
-}
-
-.active:hover {
-  background-color: #0a3f31;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-decoration: none;
+  background: #0f3d2e; /* correct deep identity green */
+  color: #ffffff;
 }

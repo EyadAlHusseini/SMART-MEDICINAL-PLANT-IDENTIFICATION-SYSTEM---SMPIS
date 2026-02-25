@@ -15,22 +15,31 @@ function Dashboard() {
         <div>
           <span className={styles.kpiLabel}>Plants Classified Today</span>
           <div className={styles.kpiValue}>247</div>
-          <span className={styles.kpiChange}>▲ +12% from yesterday</span>
+          <span className={styles.kpiChange}>+12% from yesterday</span>
         </div>
 
         <div className={styles.kpiIcon}>
           <svg
+            viewBox="0 0 20 20"
             width="22"
             height="22"
-            viewBox="0 0 24 24"
             fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M12 2C7 2 4 6 4 10c0 5 8 12 8 12s8-7 8-12c0-4-3-8-8-8z" />
-            <path d="M12 8c2 0 3 1.5 3 3s-1 3-3 3-3-1.5-3-3 1-3 3-3z" />
+            <path
+              d="M9.16667 16.6667C7.70338 16.6711 6.29188 16.1254 5.2121 15.1378C4.13232 14.1503 3.46314 12.793 3.33728 11.3351C3.21142 9.87722 3.63808 8.4253 4.53262 7.26728C5.42717 6.10927 6.72427 5.32975 8.16667 5.08333C12.9167 4.16667 14.1667 3.73333 15.8333 1.66667C16.6667 3.33333 17.5 5.15 17.5 8.33333C17.5 12.9167 13.5167 16.6667 9.16667 16.6667Z"
+              stroke="white"
+              strokeWidth="1.66667"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M1.66667 17.5C1.66667 15 3.20833 13.0333 5.9 12.5C7.91667 12.1 10 10.8333 10.8333 10"
+              stroke="white"
+              strokeWidth="1.66667"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </div>
       </div>
@@ -46,17 +55,26 @@ function Dashboard() {
             shortcut="Shortcut: Ctrl + N"
             icon={
               <svg
+                viewBox="0 0 20 20"
                 width="22"
                 height="22"
-                viewBox="0 0 24 24"
                 fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                <circle cx="12" cy="13" r="4" />
+                <path
+                  d="M9.16667 16.6667C7.70338 16.6711 6.29188 16.1254 5.2121 15.1378C4.13232 14.1503 3.46314 12.793 3.33728 11.3351C3.21142 9.87722 3.63808 8.4253 4.53262 7.26728C5.42717 6.10927 6.72427 5.32975 8.16667 5.08333C12.9167 4.16667 14.1667 3.73333 15.8333 1.66667C16.6667 3.33333 17.5 5.15 17.5 8.33333C17.5 12.9167 13.5167 16.6667 9.16667 16.6667Z"
+                  stroke="white"
+                  strokeWidth="1.66667"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M1.66667 17.5C1.66667 15 3.20833 13.0333 5.9 12.5C7.91667 12.1 10 10.8333 10.8333 10"
+                  stroke="white"
+                  strokeWidth="1.66667"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             }
           />
@@ -67,19 +85,26 @@ function Dashboard() {
             shortcut="Shortcut: Ctrl + F"
             icon={
               <svg
+                viewBox="0 0 20 20"
                 width="22"
                 height="22"
-                viewBox="0 0 24 24"
                 fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M4 4h16v16H4z" />
-                <path d="M8 8h8" />
-                <path d="M8 12h8" />
-                <path d="M8 16h8" />
+                <path
+                  d="M9.16667 16.6667C7.70338 16.6711 6.29188 16.1254 5.2121 15.1378C4.13232 14.1503 3.46314 12.793 3.33728 11.3351C3.21142 9.87722 3.63808 8.4253 4.53262 7.26728C5.42717 6.10927 6.72427 5.32975 8.16667 5.08333C12.9167 4.16667 14.1667 3.73333 15.8333 1.66667C16.6667 3.33333 17.5 5.15 17.5 8.33333C17.5 12.9167 13.5167 16.6667 9.16667 16.6667Z"
+                  stroke="white"
+                  strokeWidth="1.66667"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M1.66667 17.5C1.66667 15 3.20833 13.0333 5.9 12.5C7.91667 12.1 10 10.8333 10.8333 10"
+                  stroke="white"
+                  strokeWidth="1.66667"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             }
           />
@@ -106,26 +131,6 @@ function Dashboard() {
             <div>
               <strong>Sarah Johnson</strong> Uploaded batch of 15 images
               <div className={styles.time}>8 minutes ago</div>
-            </div>
-          </div>
-
-          <div className={styles.divider} />
-
-          <div className={styles.activityItem}>
-            <span className={styles.greenDot} />
-            <div>
-              <strong>Mike Chen</strong> Generated weekly report
-              <div className={styles.time}>23 minutes ago</div>
-            </div>
-          </div>
-
-          <div className={styles.divider} />
-
-          <div className={styles.activityItem}>
-            <span className={styles.greenDot} />
-            <div>
-              <strong>Emma Wilson</strong> Updated plant database
-              <div className={styles.time}>1 hour ago</div>
             </div>
           </div>
 
