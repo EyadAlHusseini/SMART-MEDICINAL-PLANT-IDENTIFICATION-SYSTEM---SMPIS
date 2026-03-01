@@ -3,7 +3,7 @@ import styles from "./Sidebar.module.css";
 
 const NAV_ITEMS = [
   {
-    path: "/",
+    path: "/dashboard",
     label: "Dashboard",
     icon: (
       <svg
@@ -22,7 +22,7 @@ const NAV_ITEMS = [
     ),
   },
   {
-    path: "/upload",
+    path: "/scan-upload",
     label: "Scan/Upload",
     shortcut: "Ctrl+N",
     icon: (

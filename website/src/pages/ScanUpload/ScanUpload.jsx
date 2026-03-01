@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom"; // 1. Import hook
 import ActionCard from "../../components/ActionCard/ActionCard";
 import styles from "./ScanUpload.module.css";
 
 function ScanUpload() {
+  const navigate = useNavigate(); // 2. Initialize navigate
+
   return (
     <div>
       <h1 className={styles.pageTitle}>Scan or Upload</h1>
@@ -16,6 +19,9 @@ function ScanUpload() {
             "Instant capture and analysis",
             "Keyboard: Ctrl + Shift + S",
           ]}
+          // For now, if you don't have a dedicated camera page,
+          // you can point this to a placeholder or a 'coming soon' route
+          onClick={() => alert("Camera module coming soon!")}
           icon={
             <svg
               width="22"
@@ -41,6 +47,7 @@ function ScanUpload() {
             "Supports JPG, PNG formats",
             "Max size: 10MB per image",
           ]}
+          onClick={() => navigate("/upload")} // 3. Link to the upload route
           icon={
             <svg
               width="22"
