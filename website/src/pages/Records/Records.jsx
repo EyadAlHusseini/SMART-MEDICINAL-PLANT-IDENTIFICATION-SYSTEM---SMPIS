@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "./Records.module.css";
 
 const MOCK_RECORDS = [
   {
@@ -72,18 +71,20 @@ export default function Records() {
   const [viewMode, setViewMode] = useState("grid");
 
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col gap-6 animate-in fade-in duration-500">
       {/* Top Header Section */}
-      <div className={styles.headerArea}>
+      <div className="flex justify-between items-start">
         <div>
-          <h1 className={styles.mainTitle}>Classification Records</h1>
-          <p className={styles.recordCount}>
+          <h1 className="text-2xl font-semibold text-slate-900">
+            Classification Records
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">
             {MOCK_RECORDS.length} records found
           </p>
         </div>
 
-        <div className={styles.topActions}>
-          <button className={styles.whiteBtn}>
+        <div className="flex gap-3 items-center">
+          <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
             <svg
               width="14"
               height="14"
@@ -99,14 +100,14 @@ export default function Records() {
             Export
           </button>
 
-          <div className={styles.toggleGroup}>
+          <div className="flex bg-slate-100 p-1 rounded-lg">
             <button
-              className={`${styles.toggleBtn} ${viewMode === "list" ? styles.activeToggle : ""}`}
+              className={`p-1.5 rounded-md transition-all ${viewMode === "list" ? "bg-white text-brand-green shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
               onClick={() => setViewMode("list")}
             >
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -121,12 +122,12 @@ export default function Records() {
               </svg>
             </button>
             <button
-              className={`${styles.toggleBtn} ${viewMode === "grid" ? styles.activeToggle : ""}`}
+              className={`p-1.5 rounded-md transition-all ${viewMode === "grid" ? "bg-white text-brand-green shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
               onClick={() => setViewMode("grid")}
             >
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -143,10 +144,10 @@ export default function Records() {
       </div>
 
       {/* Middle Search/Filter Bar */}
-      <div className={styles.toolbar}>
-        <div className={styles.searchBox}>
+      <div className="flex gap-4 justify-between">
+        <div className="relative flex-1 max-w-md">
           <svg
-            className={styles.searchIcon}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
             width="16"
             height="16"
             viewBox="0 0 24 24"
@@ -160,10 +161,10 @@ export default function Records() {
           <input
             type="text"
             placeholder="Search records... (Ctrl+F)"
-            className={styles.inputField}
+            className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
           />
         </div>
-        <button className={styles.whiteBtn}>
+        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
           <svg
             width="16"
             height="16"
@@ -180,46 +181,63 @@ export default function Records() {
 
       {/* Content Section */}
       {viewMode === "list" ? (
-        <div className={styles.tableWrapper}>
-          <table className={styles.recordsTable}>
+        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <table className="w-full border-collapse text-left">
             <thead>
-              <tr>
-                <th>Thumbnail</th>
-                <th>Plant Name</th>
-                <th>Confidence</th>
-                <th>Processed By</th>
-                <th>Date/Time</th>
-                <th style={{ textAlign: "right" }}>Actions</th>
+              <tr className="bg-slate-50 border-bottom border-slate-200">
+                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Thumbnail
+                </th>
+                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Plant Name
+                </th>
+                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Confidence
+                </th>
+                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Processed By
+                </th>
+                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Date/Time
+                </th>
+                <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">
+                  Actions
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-slate-100">
               {MOCK_RECORDS.map((record) => (
-                <tr key={record.id}>
-                  <td>
-                    <div className={styles.thumbContainer}>
+                <tr
+                  key={record.id}
+                  className="hover:bg-slate-50 transition-colors group"
+                >
+                  <td className="p-4">
+                    <div className="w-11 h-11 rounded-lg overflow-hidden bg-slate-100">
                       <img
                         src={record.img}
                         alt=""
-                        className={styles.listThumb}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </td>
-                  <td className={styles.boldText}>{record.name}</td>
-                  <td
-                    className={
-                      record.confidence > 90 ? styles.textGreen : styles.textRed
-                    }
-                  >
-                    {record.confidence}%
+                  <td className="p-4 font-medium text-slate-900">
+                    {record.name}
                   </td>
-                  <td>{record.user}</td>
-                  <td className={styles.grayText}>{record.date}</td>
-                  <td>
-                    <div className={styles.tableActions}>
-                      <button className={styles.iconBtn}>
+                  <td className="p-4">
+                    <span
+                      className={`font-semibold ${record.confidence > 90 ? "text-emerald-600" : "text-rose-600"}`}
+                    >
+                      {record.confidence}%
+                    </span>
+                  </td>
+                  <td className="p-4 text-slate-600">{record.user}</td>
+                  <td className="p-4 text-sm text-slate-400">{record.date}</td>
+                  <td className="p-4 text-right">
+                    <div className="flex justify-end gap-1">
+                      <button className="p-2 text-slate-400 hover:text-brand-green hover:bg-emerald-50 rounded-md transition-all">
                         <svg
-                          width="14"
-                          height="14"
+                          width="16"
+                          height="16"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
@@ -229,10 +247,10 @@ export default function Records() {
                           <circle cx="12" cy="12" r="3" />
                         </svg>
                       </button>
-                      <button className={styles.iconBtn}>
+                      <button className="p-2 text-slate-400 hover:text-brand-green hover:bg-emerald-50 rounded-md transition-all">
                         <svg
-                          width="14"
-                          height="14"
+                          width="16"
+                          height="16"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
@@ -242,10 +260,10 @@ export default function Records() {
                           <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                         </svg>
                       </button>
-                      <button className={`${styles.iconBtn} ${styles.delBtn}`}>
+                      <button className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-all">
                         <svg
-                          width="14"
-                          height="14"
+                          width="16"
+                          height="16"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
@@ -263,33 +281,42 @@ export default function Records() {
           </table>
         </div>
       ) : (
-        <div className={styles.cardsGrid}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {MOCK_RECORDS.map((record) => (
-            <div key={record.id} className={styles.plantCard}>
-              <div className={styles.cardImgWrapper}>
+            <div
+              key={record.id}
+              className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group"
+            >
+              <div className="h-44 w-full bg-slate-100 overflow-hidden">
                 <img
                   src={record.img}
                   alt={record.name}
-                  className={styles.cardImg}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className={styles.cardBody}>
-                <h3 className={styles.cardTitle}>{record.name}</h3>
-                <div className={styles.cardData}>
-                  <div className={styles.dataRow}>
-                    <span>Confidence:</span>
-                    <span className={styles.confBadge}>
+              <div className="p-4">
+                <h3 className="font-semibold text-slate-900 mb-4 truncate">
+                  {record.name}
+                </h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-500">Confidence:</span>
+                    <span className="bg-brand-green text-white text-[11px] font-bold px-2 py-0.5 rounded-md">
                       {record.confidence}%
                     </span>
                   </div>
-                  <div className={styles.dataRow}>
-                    <span>By:</span>
-                    <span>{record.user}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-500">By:</span>
+                    <span className="font-medium text-slate-700">
+                      {record.user}
+                    </span>
                   </div>
-                  <div className={styles.cardTime}>{record.date}</div>
+                  <div className="text-[12px] text-slate-400 pt-1">
+                    {record.date}
+                  </div>
                 </div>
-                <div className={styles.cardFooter}>
-                  <button className={styles.cardAction}>
+                <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-100">
+                  <button className="flex justify-center items-center gap-2 py-2 rounded-lg text-sm text-slate-500 hover:bg-slate-50 hover:text-brand-green transition-colors">
                     <svg
                       width="14"
                       height="14"
@@ -300,10 +327,10 @@ export default function Records() {
                     >
                       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                       <circle cx="12" cy="12" r="3" />
-                    </svg>{" "}
+                    </svg>
                     View
                   </button>
-                  <button className={styles.cardAction}>
+                  <button className="flex justify-center items-center gap-2 py-2 rounded-lg text-sm text-slate-500 hover:bg-slate-50 hover:text-brand-green transition-colors">
                     <svg
                       width="14"
                       height="14"
@@ -314,7 +341,7 @@ export default function Records() {
                     >
                       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                    </svg>{" "}
+                    </svg>
                     Edit
                   </button>
                 </div>
@@ -324,9 +351,13 @@ export default function Records() {
         </div>
       )}
 
-      <div className={styles.bottomTip}>
-        <strong>Tip:</strong> Use Ctrl+F to quickly search records. Click on any
-        record to view details.
+      {/* Footer Tip */}
+      <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-4 text-sm text-slate-600">
+        <strong className="text-emerald-800">Tip:</strong> Use{" "}
+        <kbd className="bg-white border border-emerald-200 px-1 rounded shadow-sm text-xs font-sans">
+          Ctrl+F
+        </kbd>{" "}
+        to quickly search records. Click on any record to view details.
       </div>
     </div>
   );

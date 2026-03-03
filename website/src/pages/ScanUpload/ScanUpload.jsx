@@ -1,16 +1,17 @@
-import { useNavigate } from "react-router-dom"; // 1. Import hook
+import { useNavigate } from "react-router-dom";
 import ActionCard from "../../components/ActionCard/ActionCard";
-import styles from "./ScanUpload.module.css";
 
 function ScanUpload() {
-  const navigate = useNavigate(); // 2. Initialize navigate
+  const navigate = useNavigate();
 
   return (
-    <div>
-      <h1 className={styles.pageTitle}>Scan or Upload</h1>
-      <p className={styles.pageSubtitle}>Choose a method to classify plants</p>
+    <div className="animate-in fade-in duration-500">
+      <h1 className="text-2xl font-semibold text-slate-900">Scan or Upload</h1>
+      <p className="text-base text-slate-500 mt-1 mb-8">
+        Choose a method to classify plants
+      </p>
 
-      <div className={styles.cards}>
+      <div className="flex flex-col md:flex-row gap-6 mb-8 max-w-[900px]">
         <ActionCard
           title="Scan Using Camera"
           description="Use your device camera to capture plant images in real-time"
@@ -19,8 +20,6 @@ function ScanUpload() {
             "Instant capture and analysis",
             "Keyboard: Ctrl + Shift + S",
           ]}
-          // For now, if you don't have a dedicated camera page,
-          // you can point this to a placeholder or a 'coming soon' route
           onClick={() => alert("Camera module coming soon!")}
           icon={
             <svg
@@ -47,7 +46,7 @@ function ScanUpload() {
             "Supports JPG, PNG formats",
             "Max size: 10MB per image",
           ]}
-          onClick={() => navigate("/upload")} // 3. Link to the upload route
+          onClick={() => navigate("/upload")}
           icon={
             <svg
               width="22"
@@ -67,9 +66,10 @@ function ScanUpload() {
         />
       </div>
 
-      <div className={styles.tip}>
-        <strong>Tips:</strong> Ensure good lighting and clear focus for best
-        results. Images should show the plant leaves, stems, or flowers clearly.
+      <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 px-5 text-sm text-slate-600 leading-relaxed max-w-[900px]">
+        <strong className="text-emerald-800">Tips:</strong> Ensure good lighting
+        and clear focus for best results. Images should show the plant leaves,
+        stems, or flowers clearly.
       </div>
     </div>
   );

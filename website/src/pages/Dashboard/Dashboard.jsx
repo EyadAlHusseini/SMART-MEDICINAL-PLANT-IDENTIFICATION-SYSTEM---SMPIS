@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./Dashboard.module.css";
 import ActionCard from "../../components/ActionCard/ActionCard";
 
 function Dashboard() {
   const navigate = useNavigate();
 
-  // New leaf icon provided earlier (used in KPI and Brand)
+  // Your Leaf SVG for the KPI and Brand
   const LeafIcon = (
     <svg
-      width="20"
-      height="20"
+      width="22"
+      height="22"
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -32,33 +31,38 @@ function Dashboard() {
   );
 
   return (
-    <div className={styles.dashboard}>
+    <div className="space-y-8 animate-in fade-in duration-500">
       {/* Header */}
-      <div className={styles.header}>
-        <h1>Dashboard</h1>
-        <p>Enterprise Control Panel</p>
-      </div>
+      <header>
+        <h1 className="text-2xl font-normal text-slate-900">Dashboard</h1>
+        <p className="text-sm text-slate-500 mt-1">Enterprise Control Panel</p>
+      </header>
 
       {/* KPI Card */}
-      <div className={styles.kpiCard}>
+      <div className="w-full max-w-[440px] bg-white border border-black/10 rounded-xl p-6 flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
         <div>
-          <span className={styles.kpiLabel}>Plants Classified Today</span>
-          <div className={styles.kpiValue}>247</div>
-          <span className={styles.kpiChange}>+12% from yesterday</span>
+          <span className="text-base text-slate-500">
+            Plants Classified Today
+          </span>
+          <div className="text-2xl font-semibold text-slate-900 my-1">247</div>
+          <span className="text-sm font-medium text-emerald-600">
+            +12% from yesterday
+          </span>
         </div>
-
-        <div className={styles.kpiIcon}>{LeafIcon}</div>
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-green to-brand-accent flex items-center justify-center">
+          {LeafIcon}
+        </div>
       </div>
 
       {/* Quick Actions */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Quick Actions</h2>
-
-        <div className={styles.actionsGrid}>
+      <section>
+        <h2 className="text-base font-semibold text-slate-900 mb-4">
+          Quick Actions
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-[900px]">
           <ActionCard
             title="Scan / Upload"
             description="Capture or upload plant images for classification"
-            shortcut="Shortcut: Ctrl + N"
             onClick={() => navigate("/scan-upload")}
             icon={
               <svg
@@ -80,7 +84,6 @@ function Dashboard() {
           <ActionCard
             title="Records"
             description="View and manage classification history"
-            shortcut="Shortcut: Ctrl + F"
             onClick={() => navigate("/records")}
             icon={
               <svg
@@ -104,36 +107,52 @@ function Dashboard() {
       </section>
 
       {/* Recent Activity */}
-      <section className={styles.recentActivity}>
-        <span className={styles.recentTitle}>Recent Activity</span>
-
-        <div className={styles.activityCard}>
-          <div className={styles.activityItem}>
-            <span className={styles.greenDot} />
-            <div>
-              <strong>John Smith</strong> Classified Monstera Deliciosa
-              <div className={styles.time}>2 minutes ago</div>
+      <section>
+        <h2 className="text-base font-semibold text-slate-900 mb-4">
+          Recent Activity
+        </h2>
+        <div className="bg-white border border-black/10 rounded-xl overflow-hidden shadow-sm">
+          <div className="divide-y divide-slate-100">
+            {/* Activity Item 1 */}
+            <div className="flex items-start gap-3 p-4 px-6 hover:bg-slate-50 transition-colors">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0" />
+              <div className="text-sm">
+                <p className="text-slate-900 font-medium">
+                  John Smith{" "}
+                  <span className="font-normal text-slate-600">
+                    Classified Monstera Deliciosa
+                  </span>
+                </p>
+                <p className="text-xs text-slate-400 mt-1">2 minutes ago</p>
+              </div>
             </div>
-          </div>
 
-          <div className={styles.divider} />
-
-          <div className={styles.activityItem}>
-            <span className={styles.greenDot} />
-            <div>
-              <strong>Sarah Johnson</strong> Uploaded batch of 15 images
-              <div className={styles.time}>8 minutes ago</div>
+            {/* Activity Item 2 */}
+            <div className="flex items-start gap-3 p-4 px-6 hover:bg-slate-50 transition-colors">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0" />
+              <div className="text-sm">
+                <p className="text-slate-900 font-medium">
+                  Sarah Johnson{" "}
+                  <span className="font-normal text-slate-600">
+                    Uploaded batch of 15 images
+                  </span>
+                </p>
+                <p className="text-xs text-slate-400 mt-1">8 minutes ago</p>
+              </div>
             </div>
-          </div>
 
-          <div className={styles.divider} />
-
-          <div className={styles.activityItem}>
-            <span className={styles.orangeDot} />
-            <div>
-              <strong>David Brown</strong> Classification failed – low
-              confidence
-              <div className={styles.time}>2 hours ago</div>
+            {/* Activity Item 3 */}
+            <div className="flex items-start gap-3 p-4 px-6 hover:bg-slate-50 transition-colors">
+              <span className="w-2 h-2 rounded-full bg-orange-500 mt-2 shrink-0" />
+              <div className="text-sm">
+                <p className="text-slate-900 font-medium">
+                  David Brown{" "}
+                  <span className="font-normal text-slate-600">
+                    Classification failed – low confidence
+                  </span>
+                </p>
+                <p className="text-xs text-slate-400 mt-1">2 hours ago</p>
+              </div>
             </div>
           </div>
         </div>
