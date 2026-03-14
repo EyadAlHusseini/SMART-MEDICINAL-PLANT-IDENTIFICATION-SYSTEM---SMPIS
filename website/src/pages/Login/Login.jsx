@@ -1,31 +1,34 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useData } from "../../context/DataContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login } = useData();
 
-  // Logic: Check if both fields are filled
   const isFormFilled = username.trim() !== "" && password.trim() !== "";
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (isFormFilled) {
+      // Logic: If username contains 'admin', make them Admin, otherwise Analyst
+      const role = username.toLowerCase().includes("admin")
+        ? "Administrator"
+        : "Plant Analyst";
+      login(username, role);
       navigate("/dashboard");
     }
   };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[#f8fafc]">
-      {/* Mesh Gradient Background */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-green/10 blur-[120px]" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-brand-accent/10 blur-[120px]" />
 
-      {/* Login Card */}
-      <div className="w-full max-w-[480px] bg-white rounded-[24px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100 z-10 mx-4">
-        {/* Header Section */}
+      <div className="w-full max-w-[480px] bg-white rounded-[24px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-slate-100 z-10 mx-4 animate-in zoom-in-95 duration-500">
         <div className="flex flex-col items-center mb-8">
           <div className="w-16 h-16 bg-brand-green rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-brand-green/20">
             <svg
@@ -57,7 +60,6 @@ export default function Login() {
           <p className="text-slate-400 mt-2 font-medium">Employee Login</p>
         </div>
 
-        {/* Form Section */}
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-2">
@@ -106,44 +108,18 @@ export default function Login() {
             </button>
           </div>
 
-          <div className="flex items-center justify-between py-1">
-            <label className="flex items-center gap-2 cursor-pointer group">
-              <input
-                type="checkbox"
-                className="w-4 h-4 rounded border-slate-300 text-brand-green focus:ring-brand-green cursor-pointer"
-              />
-              <span className="text-sm text-slate-500 group-hover:text-slate-700 transition-colors">
-                Remember me
-              </span>
-            </label>
-            <a
-              href="#"
-              className="text-sm font-semibold text-[#2d7260] hover:underline"
-            >
-              Forgot password?
-            </a>
-          </div>
-
-          {/* LIGHT UP BUTTON LOGIC */}
           <button
             type="submit"
             disabled={!isFormFilled}
-            className={`w-full py-3.5 rounded-xl font-semibold transition-all duration-500 active:scale-[0.98] mt-2 shadow-lg 
-              ${
-                isFormFilled
-                  ? "bg-brand-green text-white shadow-brand-green/20 hover:bg-brand-accent cursor-pointer opacity-100"
-                  : "bg-[#96b3a4]/40 text-white/70 cursor-not-allowed shadow-none opacity-80"
-              }`}
+            className={`w-full py-3.5 rounded-xl font-semibold transition-all duration-500 active:scale-[0.98] mt-2 shadow-lg ${isFormFilled ? "bg-brand-green text-white shadow-brand-green/20 hover:bg-brand-accent cursor-pointer opacity-100" : "bg-[#96b3a4]/40 text-white/70 cursor-not-allowed shadow-none opacity-80"}`}
           >
             Sign In
           </button>
         </form>
 
-        {/* Footer Section */}
-        <div className="mt-10">
-          <div className="h-[1px] w-full bg-slate-100 mb-6" />
-          <p className="text-center text-sm text-slate-400 font-medium tracking-wide">
-            Internal Company System Only
+        <div className="mt-10 pt-6 border-t border-slate-100">
+          <p className="text-center text-xs text-slate-400 font-medium">
+            Use "admin" in username for full access
           </p>
         </div>
       </div>
