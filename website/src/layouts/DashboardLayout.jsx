@@ -4,7 +4,8 @@ import Topbar from "../components/Topbar/Topbar";
 
 function DashboardLayout() {
   return (
-    <div className="flex min-h-screen bg-[#f3f4f3]">
+    /* We add 'dark:bg-slate-950' here so the whole app background changes */
+    <div className="flex min-h-screen bg-[#f3f4f3] dark:bg-slate-950 transition-colors duration-300">
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0">
         <Topbar />

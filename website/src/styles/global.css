@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  /* Default Light Mode Body */
   body {
-    @apply bg-[#f3f4f3] text-[#1f2937] antialiased;
+    @apply bg-[#f3f4f3] text-slate-900 antialiased transition-colors duration-300;
+  }
+
+  /* When the 'dark' class is present on <html>, change the body color */
+  .dark body {
+    @apply bg-slate-950 text-slate-50;
   }
 }

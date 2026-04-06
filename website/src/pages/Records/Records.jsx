@@ -3,24 +3,23 @@ import { useData } from "../../context/DataContext";
 
 export default function Records() {
   const [viewMode, setViewMode] = useState("grid");
-  // 1. READ DYNAMIC DATA FROM CONTEXT
   const { records } = useData();
 
   return (
     <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10">
-      {/* Top Header Section */}
+      {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white transition-colors">
             Classification Records
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             {records.length} records found
           </p>
         </div>
 
         <div className="flex gap-3 items-center">
-          <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-all">
             <svg
               width="14"
               height="14"
@@ -36,9 +35,9 @@ export default function Records() {
             Export
           </button>
 
-          <div className="flex bg-slate-100 p-1 rounded-lg">
+          <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg transition-colors">
             <button
-              className={`p-1.5 rounded-md transition-all ${viewMode === "list" ? "bg-white text-brand-green shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
+              className={`p-1.5 rounded-md transition-all ${viewMode === "list" ? "bg-white dark:bg-slate-700 text-brand-green dark:text-emerald-400 shadow-sm" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"}`}
               onClick={() => setViewMode("list")}
             >
               <svg
@@ -58,7 +57,7 @@ export default function Records() {
               </svg>
             </button>
             <button
-              className={`p-1.5 rounded-md transition-all ${viewMode === "grid" ? "bg-white text-brand-green shadow-sm" : "text-slate-500 hover:text-slate-700"}`}
+              className={`p-1.5 rounded-md transition-all ${viewMode === "grid" ? "bg-white dark:bg-slate-700 text-brand-green dark:text-emerald-400 shadow-sm" : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"}`}
               onClick={() => setViewMode("grid")}
             >
               <svg
@@ -79,7 +78,7 @@ export default function Records() {
         </div>
       </div>
 
-      {/* Middle Search/Filter Bar */}
+      {/* Toolbar */}
       <div className="flex gap-4 justify-between">
         <div className="relative flex-1 max-w-md">
           <svg
@@ -97,10 +96,10 @@ export default function Records() {
           <input
             type="text"
             placeholder="Search records... (Ctrl+F)"
-            className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all"
+            className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 transition-all"
           />
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+        <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-all">
           <svg
             width="16"
             height="16"
@@ -115,41 +114,35 @@ export default function Records() {
         </button>
       </div>
 
-      {/* Content Section (Using dynamic 'records' array) */}
+      {/* List/Grid Content */}
       {viewMode === "list" ? (
-        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden shadow-sm transition-colors">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-left min-w-[800px]">
               <thead>
-                <tr className="bg-slate-50 border-bottom border-slate-200">
-                  <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <tr className="bg-slate-50 dark:bg-white/5 border-b border-slate-200 dark:border-white/5">
+                  <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Thumbnail
                   </th>
-                  <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Plant Name
                   </th>
-                  <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Confidence
                   </th>
-                  <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Processed By
-                  </th>
-                  <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                    Date/Time
-                  </th>
-                  <th className="p-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">
+                  <th className="p-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                 {records.map((record) => (
                   <tr
                     key={record.id}
-                    className="hover:bg-slate-50 transition-colors group"
+                    className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group"
                   >
                     <td className="p-4">
-                      <div className="w-11 h-11 rounded-lg overflow-hidden bg-slate-100 border border-slate-200">
+                      <div className="w-11 h-11 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10">
                         <img
                           src={record.img}
                           alt=""
@@ -157,23 +150,19 @@ export default function Records() {
                         />
                       </div>
                     </td>
-                    <td className="p-4 font-medium text-slate-900">
+                    <td className="p-4 font-medium text-slate-900 dark:text-slate-100">
                       {record.name}
                     </td>
                     <td className="p-4">
                       <span
-                        className={`font-semibold ${record.confidence > 90 ? "text-emerald-600" : "text-rose-600"}`}
+                        className={`font-semibold ${record.confidence > 90 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}
                       >
                         {record.confidence}%
                       </span>
                     </td>
-                    <td className="p-4 text-slate-600">{record.user}</td>
-                    <td className="p-4 text-sm text-slate-400">
-                      {record.date}
-                    </td>
                     <td className="p-4 text-right">
-                      <div className="flex justify-end gap-1">
-                        <button className="p-2 text-slate-400 hover:text-brand-green hover:bg-emerald-50 rounded-md transition-all">
+                      <div className="flex justify-end gap-1 text-slate-400">
+                        <button className="p-2 hover:text-brand-green hover:bg-emerald-50 dark:hover:bg-brand-green/20 rounded-md transition-all">
                           <svg
                             width="16"
                             height="16"
@@ -186,20 +175,7 @@ export default function Records() {
                             <circle cx="12" cy="12" r="3" />
                           </svg>
                         </button>
-                        <button className="p-2 text-slate-400 hover:text-brand-green hover:bg-emerald-50 rounded-md transition-all">
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                          </svg>
-                        </button>
-                        <button className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-all">
+                        <button className="p-2 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-md transition-all">
                           <svg
                             width="16"
                             height="16"
@@ -225,9 +201,9 @@ export default function Records() {
           {records.map((record) => (
             <div
               key={record.id}
-              className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group animate-in zoom-in-95 duration-300"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group"
             >
-              <div className="h-44 w-full bg-slate-100 overflow-hidden">
+              <div className="h-44 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                 <img
                   src={record.img}
                   alt={record.name}
@@ -235,30 +211,19 @@ export default function Records() {
                 />
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-slate-900 mb-4 truncate">
+                <h3 className="font-semibold text-slate-900 dark:text-white mb-4 truncate">
                   {record.name}
                 </h3>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500 font-medium">
-                      Confidence:
-                    </span>
-                    <span className="bg-brand-green text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-sm">
-                      {record.confidence}%
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500 font-medium">By:</span>
-                    <span className="font-semibold text-slate-700">
-                      {record.user}
-                    </span>
-                  </div>
-                  <div className="text-[12px] text-slate-400 pt-1 font-medium">
-                    {record.date}
-                  </div>
+                <div className="flex justify-between items-center text-sm mb-4">
+                  <span className="text-slate-500 dark:text-slate-400">
+                    Confidence:
+                  </span>
+                  <span className="bg-brand-green text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-sm">
+                    {record.confidence}%
+                  </span>
                 </div>
-                <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-100">
-                  <button className="flex justify-center items-center gap-2 py-2 rounded-lg text-sm text-slate-500 hover:bg-slate-50 hover:text-brand-green transition-colors">
+                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100 dark:border-white/5">
+                  <button className="flex justify-center items-center gap-2 py-2 rounded-lg text-sm text-slate-500 dark:text-slate-400 hover:text-brand-green dark:hover:text-emerald-400 transition-colors">
                     <svg
                       width="14"
                       height="14"
@@ -272,7 +237,7 @@ export default function Records() {
                     </svg>
                     View
                   </button>
-                  <button className="flex justify-center items-center gap-2 py-2 rounded-lg text-sm text-slate-500 hover:bg-slate-50 hover:text-brand-green transition-colors">
+                  <button className="flex justify-center items-center gap-2 py-2 rounded-lg text-sm text-slate-500 dark:text-slate-400 hover:text-brand-green dark:hover:text-emerald-400 transition-colors">
                     <svg
                       width="14"
                       height="14"
@@ -293,10 +258,12 @@ export default function Records() {
         </div>
       )}
 
-      {/* Footer Tip */}
-      <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-4 text-sm text-slate-600 shadow-sm">
-        <strong className="text-emerald-800">Tip:</strong> Use Search to quickly
-        find records. Click on any record to view details or edit metadata.
+      {/* Tip Box */}
+      <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/50 rounded-lg p-4 text-sm text-slate-600 dark:text-emerald-300 shadow-sm transition-colors">
+        <strong className="text-emerald-800 dark:text-emerald-400 font-bold">
+          Tip:
+        </strong>{" "}
+        Use Search to quickly find records.
       </div>
     </div>
   );

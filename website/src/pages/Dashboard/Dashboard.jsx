@@ -9,9 +9,7 @@ function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, activities, stats } = useData();
 
-  // Calculation Logic
   const difference = stats.todayCount - stats.yesterdayCount;
-  // Handle division by zero if yesterday was 0
   const percentageChange =
     stats.yesterdayCount === 0
       ? stats.todayCount * 100
@@ -52,25 +50,25 @@ function Dashboard() {
       />
 
       <header>
-        <h1 className="text-2xl font-semibold text-slate-900 leading-tight">
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-white transition-colors">
           Welcome, {user?.name}
         </h1>
-        <p className="text-sm text-slate-500 mt-1 font-medium">
+        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium transition-colors">
           Enterprise Control Panel • {user?.role}
         </p>
       </header>
 
       {/* KPI Card */}
-      <div className="w-full max-w-[440px] bg-white border border-black/10 rounded-xl p-6 flex justify-between items-center shadow-sm">
+      <div className="w-full max-w-[440px] bg-white dark:bg-slate-900 border border-black/10 dark:border-white/5 rounded-xl p-6 flex justify-between items-center shadow-sm transition-all duration-300">
         <div>
-          <span className="text-base text-slate-500 font-medium">
+          <span className="text-base text-slate-500 dark:text-slate-400 font-medium">
             Plants Classified Today
           </span>
-          <div className="text-2xl font-bold text-slate-900 my-1">
+          <div className="text-2xl font-bold text-slate-900 dark:text-white my-1">
             {stats.todayCount}
           </div>
           <div
-            className={`flex items-center gap-1 text-sm font-bold ${isPositive ? "text-emerald-600" : "text-rose-600"}`}
+            className={`flex items-center gap-1 text-sm font-bold ${isPositive ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}
           >
             <svg
               className={`transition-transform duration-500 ${isPositive ? "" : "rotate-180"}`}
@@ -94,7 +92,7 @@ function Dashboard() {
       </div>
 
       <section>
-        <h2 className="text-base font-semibold text-slate-900 mb-4">
+        <h2 className="text-base font-semibold text-slate-900 dark:text-white mb-4 transition-colors">
           Quick Actions
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -117,7 +115,6 @@ function Dashboard() {
               </svg>
             }
           />
-
           <ActionCard
             title="Records"
             description="View classification history"
@@ -139,7 +136,6 @@ function Dashboard() {
             }
           />
 
-          {/* ADMIN ONLY CARDS */}
           {user?.role === "Administrator" && (
             <>
               <ActionCard
@@ -162,7 +158,6 @@ function Dashboard() {
                   </svg>
                 }
               />
-
               <ActionCard
                 title="Data Management"
                 description="Manage plant database"
@@ -182,7 +177,6 @@ function Dashboard() {
                   </svg>
                 }
               />
-
               <ActionCard
                 variant="action"
                 title="Add Employee"
@@ -210,48 +204,36 @@ function Dashboard() {
       </section>
 
       <section>
-        <h2 className="text-base font-semibold text-slate-900 mb-4">
+        <h2 className="text-base font-semibold text-slate-900 dark:text-white mb-4 transition-colors">
           Recent Activity
         </h2>
-        <div className="bg-white border border-black/10 rounded-xl overflow-hidden shadow-sm">
-          <div className="divide-y divide-slate-100">
+        <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/5 rounded-xl overflow-hidden shadow-sm transition-all duration-300">
+          <div className="divide-y divide-slate-100 dark:divide-white/5">
             {activities.length > 0 ? (
               activities.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-start gap-3 p-4 px-6 hover:bg-slate-50 transition-colors group"
+                  className="flex items-start gap-3 p-4 px-6 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group"
                 >
                   <span
                     className={`w-2.5 h-2.5 rounded-full mt-1.5 shrink-0 ${item.type === "success" ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" : "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.4)]"}`}
                   />
                   <div className="text-sm">
-                    <p className="text-slate-900 font-medium">
+                    <p className="text-slate-900 dark:text-slate-100 font-medium">
                       {item.name}{" "}
-                      <span className="font-normal text-slate-600">
+                      <span className="font-normal text-slate-500 dark:text-slate-400">
                         {item.action}
                       </span>
                     </p>
-                    <p className="text-xs text-slate-400 mt-1">{item.time}</p>
+                    <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                      {item.time}
+                    </p>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="p-12 text-center flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mb-3">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#cbd5e1"
-                    strokeWidth="2"
-                  >
-                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <p className="text-slate-400 text-sm font-medium">
-                  No activity to show yet.
-                </p>
+              <div className="p-12 text-center text-slate-400 dark:text-slate-500 italic">
+                No recent activity to show
               </div>
             )}
           </div>
