@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useData } from "../../context/DataContext";
+import { toPng } from "html-to-image";
 
 export default function Result() {
   const navigate = useNavigate();
   const { records } = useData();
+  const exportRef = useRef(null);
 
   const [showScientific, setShowScientific] = useState(true);
   const [showUsage, setShowUsage] = useState(true);
   const [showGrowth, setShowGrowth] = useState(true);
 
   const latestResult = records[0];
+
+  const handleExport = () => {
+    if (exportRef.current === null) return;
+
+    toPng(exportRef.current, { cacheBust: true, backgroundColor: "#f8fafc" })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = `classification-${latestResult?.name || "result"}.png`;
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.error("Export failed", err);
+      });
+  };
 
   if (!latestResult) {
     return (
@@ -28,7 +45,6 @@ export default function Result() {
 
   return (
     <div className="animate-in fade-in duration-500 pb-10">
-      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
           <button
@@ -56,9 +72,11 @@ export default function Result() {
           </div>
         </div>
 
-        {/* RESTORED: All Header Actions */}
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 h-10 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+          <button
+            onClick={handleExport}
+            className="flex items-center gap-2 h-10 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+          >
             <svg
               className="w-4 h-4"
               fill="none"
@@ -68,7 +86,7 @@ export default function Result() {
             >
               <path d="M12 3v12m0 0l4-4m-4 4l-4-4M4 21h16" />
             </svg>
-            Export
+            Export PNG
           </button>
           <button className="flex items-center gap-2 h-10 px-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
             <svg
@@ -98,8 +116,10 @@ export default function Result() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6 items-start">
-        {/* Left Column */}
+      <div
+        ref={exportRef}
+        className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6 items-start p-2"
+      >
         <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/5 rounded-xl p-6 shadow-sm transition-colors">
           <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-300 uppercase tracking-wider mb-4">
             Image Preview
@@ -110,7 +130,6 @@ export default function Result() {
             className="w-full h-[60vh] max-h-[520px] object-cover rounded-lg border dark:border-white/10 shadow-inner mb-6"
           />
 
-          {/* FIXED: Metadata Typography */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="p-3 bg-slate-50 dark:bg-white/5 rounded-lg">
               <p className="text-slate-500 dark:text-slate-400 text-xs mb-1 font-medium">
@@ -139,7 +158,6 @@ export default function Result() {
           </div>
         </div>
 
-        {/* Right Column */}
         <div className="flex flex-col gap-4">
           <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/5 rounded-xl p-6 shadow-sm transition-colors">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
@@ -175,7 +193,6 @@ export default function Result() {
             </div>
           </div>
 
-          {/* RESTORED: All 3 sections including Usage */}
           {[
             {
               id: "sci",

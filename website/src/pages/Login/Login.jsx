@@ -14,11 +14,10 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     if (isFormFilled) {
-      // Logic: If username contains 'admin', make them Admin, otherwise Analyst
       const role = username.toLowerCase().includes("admin")
         ? "Administrator"
         : "Plant Analyst";
-      login(username, role);
+      login(username, password, role);
       navigate("/dashboard");
     }
   };
@@ -119,7 +118,7 @@ export default function Login() {
 
         <div className="mt-10 pt-6 border-t border-slate-100">
           <p className="text-center text-xs text-slate-400 font-medium">
-            Use "admin" in username for full access
+            Internal System Access Only
           </p>
         </div>
       </div>

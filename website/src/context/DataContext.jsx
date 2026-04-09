@@ -15,7 +15,6 @@ const getDateOffset = (days) => {
 };
 
 export function DataProvider({ children }) {
-  // --- AUTH & THEME STATE ---
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem("pc_user");
     return saved ? JSON.parse(saved) : null;
@@ -25,7 +24,10 @@ export function DataProvider({ children }) {
     return localStorage.getItem("pc_theme") || "light";
   });
 
-  // --- APP STATE ---
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem("pc_lang") || "English";
+  });
+
   const [records, setRecords] = useState(() => {
     const saved = localStorage.getItem("pc_records");
     return saved ? JSON.parse(saved) : [];
@@ -41,21 +43,13 @@ export function DataProvider({ children }) {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // --- PERSISTENCE & DARK MODE LOGIC ---
   useEffect(() => {
-    // 1. Save choice to storage
     localStorage.setItem("pc_theme", theme);
-
-    // 2. Get the <html> element
     const root = window.document.documentElement;
-
-    // 3. Logic to determine if we should be dark
     const isDark =
       theme === "dark" ||
       (theme === "system" &&
         window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-    // 4. Apply or Remove the class
     if (isDark) {
       root.classList.add("dark");
     } else {
@@ -63,6 +57,9 @@ export function DataProvider({ children }) {
     }
   }, [theme]);
 
+  useEffect(() => {
+    localStorage.setItem("pc_lang", language);
+  }, [language]);
   useEffect(() => {
     localStorage.setItem("pc_user", JSON.stringify(user));
   }, [user]);
@@ -85,20 +82,26 @@ export function DataProvider({ children }) {
     };
   }, [records]);
 
-  // --- ACTIONS ---
-  const login = (username, role) => {
+  const login = (username, password, role) => {
     setUser({
       username,
+      password,
       role,
       name:
         username.split(/[._@]/)[0].charAt(0).toUpperCase() +
         username.split(/[._@]/)[0].slice(1),
+      avatar: null,
+      email: `${username.toLowerCase()}@organization.com`,
     });
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem("pc_user");
+  };
+
+  const updateUser = (newData) => {
+    setUser((prev) => ({ ...prev, ...newData }));
   };
 
   const addNewClassification = (plantName, confidence, imageUrl) => {
@@ -138,8 +141,11 @@ export function DataProvider({ children }) {
         user,
         login,
         logout,
+        updateUser,
         theme,
-        setTheme, // Added theme exports
+        setTheme,
+        language,
+        setLanguage,
         records,
         activities,
         employees,

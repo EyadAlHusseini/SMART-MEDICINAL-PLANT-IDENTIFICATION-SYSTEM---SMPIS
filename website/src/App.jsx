@@ -9,14 +9,14 @@ import Records from "./pages/Records/Records";
 import Settings from "./pages/Settings/Settings";
 import DataManagement from "./pages/DataManagement/DataManagement";
 import Reports from "./pages/Reports/Reports";
+import ProfileSettings from "./pages/Profile/ProfileSettings";
+import ChangePassword from "./pages/Profile/ChangePassword";
 
-// Helper Component: Redirect to login if not authenticated
 const PrivateRoute = ({ children }) => {
   const { user } = useData();
   return user ? children : <Navigate to="/login" replace />;
 };
 
-// Helper Component: Redirect if not Admin
 const AdminRoute = ({ children }) => {
   const { user } = useData();
   return user?.role === "Administrator" ? (
@@ -46,8 +46,9 @@ function App() {
           <Route path="result" element={<Result />} />
           <Route path="records" element={<Records />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="profile-settings" element={<ProfileSettings />} />
+          <Route path="change-password" element={<ChangePassword />} />
 
-          {/* Admin Protected Routes */}
           <Route
             path="DataManagement"
             element={

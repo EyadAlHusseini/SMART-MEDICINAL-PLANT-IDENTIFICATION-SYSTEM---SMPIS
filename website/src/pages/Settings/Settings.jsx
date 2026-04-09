@@ -2,29 +2,10 @@ import React, { useState } from "react";
 import { useData } from "../../context/DataContext";
 
 export default function Settings() {
-  const [activeTab, setActiveTab] = useState("General");
-  const { theme, setTheme, logout } = useData();
+  const [activeTab, setActiveTab] = useState("Appearance");
+  const { theme, setTheme, logout, user, language, setLanguage } = useData();
 
   const tabs = [
-    {
-      id: "General",
-      icon: (
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="2" y="3" width="20" height="14" rx="2" />
-          <line x1="8" y1="21" x2="16" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
-        </svg>
-      ),
-    },
     {
       id: "Appearance",
       icon: (
@@ -120,7 +101,7 @@ export default function Settings() {
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 items-start">
-        <div className="bg-white dark:bg-slate-800 border border-black/10 dark:border-white/5 rounded-xl p-2 shadow-sm sticky top-24">
+        <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/5 rounded-xl p-2 shadow-sm sticky top-24">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -146,16 +127,19 @@ export default function Settings() {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white dark:bg-slate-800 border border-black/10 dark:border-white/5 rounded-xl p-8 shadow-sm min-h-[500px]">
-            {activeTab === "General" && <GeneralSettings />}
+          <div className="bg-white dark:bg-slate-900 border border-black/10 dark:border-white/5 rounded-xl p-8 shadow-sm min-h-[500px]">
             {activeTab === "Appearance" && (
               <AppearanceSettings
                 currentTheme={theme}
                 onThemeChange={setTheme}
+                language={language}
+                onLanguageChange={setLanguage}
               />
             )}
             {activeTab === "Notifications" && <NotificationSettings />}
-            {activeTab === "Integrations" && <IntegrationSettings />}
+            {activeTab === "Integrations" && (
+              <IntegrationSettings role={user?.role} />
+            )}
             {activeTab === "About" && <AboutSettings />}
           </div>
 
@@ -223,47 +207,12 @@ function Toggle({ label, description, defaultChecked = false }) {
   );
 }
 
-function GeneralSettings() {
-  return (
-    <div className="space-y-6">
-      <h2 className="text-lg font-semibold text-slate-900 dark:text-white border-b dark:border-white/10 pb-4">
-        General Settings
-      </h2>
-      <div className="space-y-6 max-w-md">
-        <div>
-          <label className="text-sm font-medium text-slate-900 dark:text-slate-300 mb-2 block">
-            Language
-          </label>
-          <select className="w-full p-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-brand-green/20 outline-none">
-            <option>English</option>
-            <option>Spanish</option>
-          </select>
-        </div>
-        <div>
-          <label className="text-sm font-medium text-slate-900 dark:text-slate-300 mb-2 block">
-            Data Retention Policy
-          </label>
-          <select className="w-full p-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-brand-green/20 outline-none">
-            <option>90 days</option>
-            <option>30 days</option>
-          </select>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-            How long to keep classification records
-          </p>
-        </div>
-        <div className="pt-2">
-          <Toggle
-            label="Auto-save Classifications"
-            description="Automatically save results after processing"
-            defaultChecked={true}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AppearanceSettings({ currentTheme, onThemeChange }) {
+function AppearanceSettings({
+  currentTheme,
+  onThemeChange,
+  language,
+  onLanguageChange,
+}) {
   const options = [
     {
       id: "light",
@@ -328,7 +277,23 @@ function AppearanceSettings({ currentTheme, onThemeChange }) {
       <h2 className="text-lg font-semibold text-slate-900 dark:text-white border-b dark:border-white/10 pb-4">
         Appearance
       </h2>
-      <div>
+
+      <div className="max-w-md">
+        <label className="text-sm font-medium text-slate-900 dark:text-slate-300 mb-2 block">
+          Language
+        </label>
+        <select
+          value={language}
+          onChange={(e) => onLanguageChange(e.target.value)}
+          className="w-full p-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm dark:text-white focus:ring-2 focus:ring-brand-green/20 outline-none"
+        >
+          <option value="English">English</option>
+          <option value="Spanish">Spanish</option>
+          <option value="Arabic">Arabic</option>
+        </select>
+      </div>
+
+      <div className="pt-2">
         <p className="text-sm font-medium text-slate-900 dark:text-slate-300 mb-4">
           Theme
         </p>
@@ -340,14 +305,14 @@ function AppearanceSettings({ currentTheme, onThemeChange }) {
               className={`flex flex-col items-center gap-3 p-4 border rounded-xl transition-all ${
                 currentTheme === opt.id
                   ? "border-brand-green bg-emerald-50/50 dark:bg-brand-green/10"
-                  : "border-slate-100 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-500"
+                  : "border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700"
               }`}
             >
               <div
-                className={`w-10 h-10 rounded-lg bg-white dark:bg-slate-700 border flex items-center justify-center shadow-sm ${
+                className={`w-10 h-10 rounded-lg bg-white dark:bg-slate-800 border flex items-center justify-center shadow-sm ${
                   currentTheme === opt.id
                     ? "border-brand-green text-brand-green"
-                    : "border-slate-200 dark:border-slate-600 text-slate-400"
+                    : "border-slate-200 dark:border-slate-700 text-slate-400"
                 }`}
               >
                 {opt.icon}
@@ -361,6 +326,7 @@ function AppearanceSettings({ currentTheme, onThemeChange }) {
           ))}
         </div>
       </div>
+
       <div className="pt-4 divide-y divide-slate-100 dark:divide-white/5">
         <p className="text-sm font-medium text-slate-900 dark:text-slate-300 mb-2">
           Display Options
@@ -408,7 +374,7 @@ function NotificationSettings() {
   );
 }
 
-function IntegrationSettings() {
+function IntegrationSettings({ role }) {
   return (
     <div className="space-y-8 text-slate-900 dark:text-white">
       <h2 className="text-lg font-semibold border-b dark:border-white/10 pb-4">
@@ -417,10 +383,10 @@ function IntegrationSettings() {
       <div>
         <p className="text-sm font-medium mb-4">Configuration Management</p>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
             Export Config
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
             Import Config
           </button>
         </div>
@@ -433,13 +399,15 @@ function IntegrationSettings() {
             description="Sync data to cloud storage"
           />
         </div>
-        <div className="p-4 border border-slate-100 dark:border-white/5 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
-          <Toggle
-            label="Email Reports"
-            description="Send reports via email"
-            defaultChecked={true}
-          />
-        </div>
+        {role === "Administrator" && (
+          <div className="p-4 border border-slate-100 dark:border-white/5 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+            <Toggle
+              label="Email Reports"
+              description="Send reports via email"
+              defaultChecked={true}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
